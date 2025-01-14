@@ -12,7 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class mainPageController extends Application{
+public class mainPageController<T> extends Application{
 	
 	@FXML
 	private TextField newAddressTxtBox;
