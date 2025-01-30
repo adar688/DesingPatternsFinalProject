@@ -16,6 +16,11 @@ public class Report {
 		calcCount(report.body());
 	}
 	
+	public Report(String address) {	// TODO: add configuration
+		this.address = address;
+		link = "chainabuse.com/report/" + address;
+		abuseCount = 0;
+	}
 	/***
 	 * Gets a response body and returns the amount of reports in it (properties in the JSON)
 	 * @param body

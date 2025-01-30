@@ -1,18 +1,23 @@
 package GUI;
 
+import chainAbuseAPIConn.Report;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.lang.String;
+import javafx.event.ActionEvent;
 
-public class mainPageController<T> extends Application{
+public class mainPageController extends Application{
 	
 	@FXML
 	private TextField newAddressTxtBox;
@@ -21,17 +26,16 @@ public class mainPageController<T> extends Application{
 	private Button AddToListBtn;
 	
 	@FXML
-	private TableView<T> AddressToCheckTable;
+	private TableView<Report> AddressToCheckTable;
 	
 	@FXML 
-	private TableColumn<T,T> AddressClmCheckTable;
+	private TableColumn<Report,String> AddressClmCheckTable;
 	
 	@FXML 
-	private TableColumn<T,T> EditClmCheckTable;
+	private TableColumn<Report,Button> EditClmCheckTable;
 	
 	@FXML 
-	private TableColumn<T,T> DeleteClmCheckTable;
-	
+	private TableColumn<Report,Button> DeleteClmCheckTable;
 	
 	@FXML
 	private Button clearTableBtn;
@@ -43,16 +47,16 @@ public class mainPageController<T> extends Application{
 	private Button scanBtn;
 	
 	@FXML
-	private TableView<T> ResultsTable;
+	private TableView<Report> ResultsTable;
 	
 	@FXML 
-	private TableColumn<T,T> AddressClmReportTable;
+	private TableColumn<Report,String> AddressClmReportTable;
 	
 	@FXML 
-	private TableColumn<T,T> NumOfAbusesClmReportTable;
+	private TableColumn<Report,Integer> NumOfAbusesClmReportTable;
 	
 	@FXML 
-	private TableColumn<T,T> LinkClimReportTable;
+	private TableColumn<Report,String> LinkClimReportTable;
 	
 	@FXML
 	Button uploadFileBtn;
@@ -60,7 +64,95 @@ public class mainPageController<T> extends Application{
 	@FXML
 	private Button saveResultsBtn;
 	
+	@FXML
+	private void clearTable(ActionEvent event) {
+	    // Implementation for clearTable button
+	}
+
 	
+	@FXML
+	private void scan(ActionEvent event) {
+	    // Implementation for scan button
+	}
+
+	@FXML
+	private void UploadFile(ActionEvent event) {
+	    // Implementation for uploadFileBtn
+	}
+
+	@FXML
+	private void saveResults(ActionEvent event) {
+	    // Implementation for saveResultsBtn
+	}
+	
+	@FXML
+	private void addToList(ActionEvent event) {
+	    String newAddress = newAddressTxtBox.getText();
+	    if(!newAddress.isEmpty()) {
+	        // Create new Report object
+	        Report report = new Report(newAddress);
+	        
+	        // Add to table
+	        AddressToCheckTable.getItems().add(report);
+	        
+	        // Clear the text field
+	        newAddressTxtBox.clear();
+	    }
+	}
+	
+	
+	@FXML
+	private void initialize() {
+	    // Set up the address column
+	    AddressClmCheckTable.setCellValueFactory(cellData -> 
+	        new SimpleStringProperty(cellData.getValue().getAddress()));
+	        
+	    // Set up the Edit and Delete columns
+	    EditClmCheckTable.setCellFactory(param -> new TableCell<Report, Button>() {
+	        private final Button editButton = new Button("Edit");
+	        
+	        @Override
+	        protected void updateItem(Button item, boolean empty) {
+	            super.updateItem(item, empty);
+	            
+	            if (empty) {
+	                setGraphic(null);
+	            } else {
+	                setGraphic(editButton);
+	                editButton.setOnAction(event -> {
+	                    Report report = getTableView().getItems().get(getIndex());
+	                    // Add edit functionality here
+	                });
+	            }
+	        }
+	    });
+	    
+	    DeleteClmCheckTable.setCellFactory(param -> new TableCell<Report, Button>() {
+	        private final Button deleteButton = new Button("Delete");
+	        
+	        @Override
+	        protected void updateItem(Button item, boolean empty) {
+	            super.updateItem(item, empty);
+	            
+	            if (empty) {
+	                setGraphic(null);
+	            } else {
+	                setGraphic(deleteButton);
+	                deleteButton.setOnAction(event -> {
+	                    Report report = getTableView().getItems().get(getIndex());
+	                    AddressToCheckTable.getItems().remove(report);
+	                });
+	            }
+	        }
+	    });
+	    
+	    // Initialize the table
+	    AddressToCheckTable.getItems().clear();
+	    
+	    // Connect the button to the method
+	    AddToListBtn.setOnAction(this::addToList);
+	}
+
 
 	public void start(Stage primaryStage) throws Exception {
 
