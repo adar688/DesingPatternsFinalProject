@@ -30,7 +30,7 @@ public class HttpController {
 		return instance;
 	}
 	
-	public List<Report> fetchAllResports(List<String> addresses) throws Exception {
+	public List<Report> fetchAllReports(List<String> addresses) throws Exception {
         List<Report> reports = new ArrayList<>();
         
         for (String address : addresses) {
