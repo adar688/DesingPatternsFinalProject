@@ -11,19 +11,26 @@ import java.util.Map;
 public class HttpController {
 
 	private ChainAbuseRequestBuilder requestBuilder;
-	private List<String> addresses;
 	private final HttpClient httpClient;
+	private static HttpController instance;
 
-	public HttpController(String baseUrl, String endpoint, String apiKey, List<String> addresses) {
+	private HttpController(String baseUrl, String endpoint, String apiKey) {
 		httpClient = HttpClient.newHttpClient();
-		this.addresses = addresses;
 		// Make basic builder to run
 		requestBuilder = new ChainAbuseRequestBuilder(baseUrl)
 				.endpoint(endpoint)
 				.basicAuth(apiKey);
 	}
 	
-	public Map<String, HttpResponse<String>> fetchAllResponses() throws Exception {
+	public static HttpController getInstance() {
+		if(instance == null) {
+			// TODO: make this configurable
+			return new HttpController("https://api.chainabuse.com/v0","/reports","Y2FfTmpSdmVUazRlR3hRUkZKdGRWZzNXVGRQWjFWV1dHeHVMa2xFVHpablJVSkllRGQ0TVRkUkwxcHlSVEpuTlVFOVBROmNhX05qUnZlVGs0ZUd4UVJGSnRkVmczV1RkUFoxVldXR3h1TGtsRVR6Wm5SVUpJZURkNE1UZFJMMXB5UlRKbk5VRTlQUQ==");
+		}
+		return instance;
+	}
+	
+	public Map<String, HttpResponse<String>> fetchAllResponses(List<String> addresses) throws Exception {
         Map<String, HttpResponse<String>> responses = new HashMap<>();
         
         for (String address : addresses) {
@@ -48,9 +55,9 @@ public class HttpController {
 		arr.add("bc1qcrx80eklp9tdz4sx7p0v3ghvc2w5v2h9seqgln");
 		arr.add("3NmbqMoydJUDaUTkkyf3yt4EovrZV81mW1");
 		arr.add("1Agp6hLhVhEwZ9px4LZrqN2j8PoW9vPUGR");
-		HttpController hc = new HttpController("https://api.chainabuse.com/v0","/reports","Y2FfTmpSdmVUazRlR3hRUkZKdGRWZzNXVGRQWjFWV1dHeHVMa2xFVHpablJVSkllRGQ0TVRkUkwxcHlSVEpuTlVFOVBROmNhX05qUnZlVGs0ZUd4UVJGSnRkVmczV1RkUFoxVldXR3h1TGtsRVR6Wm5SVUpJZURkNE1UZFJMMXB5UlRKbk5VRTlQUQ==",arr);
+		HttpController hc = HttpController.getInstance();
 		try {
-			Map<String, HttpResponse<String>> responses = hc.fetchAllResponses();
+			Map<String, HttpResponse<String>> responses = hc.fetchAllResponses(arr);
 			for(String address: arr) {
 				System.out.println(address + responses.get(address).body());
 			}
