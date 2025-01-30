@@ -41,7 +41,7 @@ public class HttpController {
             HttpResponse<String> response = httpClient
                     .send(request, HttpResponse.BodyHandlers.ofString());
                     
-            reports.add(new Report("chainabuse.com/report/",address,response));
+            reports.add(new Report(address,response));
         }
         
         return reports;
