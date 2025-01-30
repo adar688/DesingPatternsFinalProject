@@ -23,7 +23,7 @@ public class ChainAbuseRequestBuilder {
         queryParams.put("includePrivate", "false");
         queryParams.put("page", "1");
         queryParams.put("perPage", "50");
-        endpoint = "/reports";
+        endpoint = "/reports";	// defaultive endpoint
     }
     
     /***
@@ -59,7 +59,7 @@ public class ChainAbuseRequestBuilder {
     /***
      * Add crypto address to the request
      * @param address
-     * @return
+     * @return current ChainAbuseRequestBuilder object
      */
     public ChainAbuseRequestBuilder address(String address) {
         return queryParam("address", address);
