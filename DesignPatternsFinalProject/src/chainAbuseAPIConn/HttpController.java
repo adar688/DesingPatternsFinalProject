@@ -30,8 +30,8 @@ public class HttpController {
 		return instance;
 	}
 	
-	public Map<String, HttpResponse<String>> fetchAllResponses(List<String> addresses) throws Exception {
-        Map<String, HttpResponse<String>> responses = new HashMap<>();
+	public List<Report> fetchAllResports(List<String> addresses) throws Exception {
+        List<Report> reports = new ArrayList<>();
         
         for (String address : addresses) {
             HttpRequest request = requestBuilder
@@ -41,29 +41,29 @@ public class HttpController {
             HttpResponse<String> response = httpClient
                     .send(request, HttpResponse.BodyHandlers.ofString());
                     
-            responses.put(address, response);
+            reports.add(new Report("chainabuse.com/report/",address,response));
         }
         
-        return responses;
+        return reports;
     }
 	
 	
-	public static void main(String[] args) {
-		ArrayList<String> arr = new ArrayList<>();
-		arr.add("19TA5Sq3RP4JV2sn3UG1TNW4hRLjYKLyFx");
-		arr.add("bc1qpzf5a7ucnfkwhgkxlyaywsyj6ennaspkcaxcpq");
-		arr.add("bc1qcrx80eklp9tdz4sx7p0v3ghvc2w5v2h9seqgln");
-		arr.add("3NmbqMoydJUDaUTkkyf3yt4EovrZV81mW1");
-		arr.add("1Agp6hLhVhEwZ9px4LZrqN2j8PoW9vPUGR");
-		HttpController hc = HttpController.getInstance();
-		try {
-			Map<String, HttpResponse<String>> responses = hc.fetchAllResponses(arr);
-			for(String address: arr) {
-				System.out.println(address + responses.get(address).body());
-			}
-		} catch(Exception e) {
-			System.out.println(String.format("Error while getting responses or somthin", e)); // TODO: fix message
-		}
-		
-	}
+//	public static void main(String[] args) {
+//		ArrayList<String> arr = new ArrayList<>();
+//		arr.add("19TA5Sq3RP4JV2sn3UG1TNW4hRLjYKLyFx");
+//		arr.add("bc1qpzf5a7ucnfkwhgkxlyaywsyj6ennaspkcaxcpq");
+//		arr.add("bc1qcrx80eklp9tdz4sx7p0v3ghvc2w5v2h9seqgln");
+//		arr.add("3NmbqMoydJUDaUTkkyf3yt4EovrZV81mW1");
+//		arr.add("1Agp6hLhVhEwZ9px4LZrqN2j8PoW9vPUGR");
+//		HttpController hc = HttpController.getInstance();
+//		try {
+//			Map<String, HttpResponse<String>> responses = hc.fetchAllResponses(arr);
+//			for(String address: arr) {
+//				System.out.println(address + responses.get(address).body());
+//			}
+//		} catch(Exception e) {
+//			System.out.println(String.format("Error while getting responses or somthin", e)); // TODO: fix message
+//		}
+//		
+//	}
 }
