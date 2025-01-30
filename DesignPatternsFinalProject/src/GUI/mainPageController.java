@@ -32,6 +32,8 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.Alert;
@@ -110,9 +112,9 @@ public class mainPageController extends Application{
 	        ResultsTable.getItems().addAll(resultList);
 	        // Clear the addresses table
 	        AddressToCheckTable.getItems().clear();
+	        logManager.notifyObservers(createLogMessage("scan completed successfully"));
 	    } catch(Exception e) {    // TODO: check type of exceptions
-	        System.out.println(e.getMessage());
-	        System.out.println(e.getStackTrace());
+	        logManager.notifyObservers(createLogMessage("scan failed: "+ e.getMessage()));
 	    }
 	}
 	
@@ -249,14 +251,21 @@ public class mainPageController extends Application{
 	    });
 	}
 	
+	private String createLogMessage(String message) {
+	    return String.format("%s - %s", 
+	        LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yy HH:mm:ss")),
+	        message);
+	}
+	
 	@FXML
 	private void initialize() {
 		// initialize attributes
 		httpController = HttpController.getInstance();
 		resultList = new ArrayList<>();
 		logManager = new LogManager();
-	    logManager.attach(new LogToFile("C:\\Users\\Shay\\Desktop\\education\\semester 7")); // TODO: make configurable
-	    logManager.attach(new LogToUI());
+	    logManager.attach(new LogToFile("C:\\Users\\Shay\\Desktop\\education\\semester 7\\logs.txt")); // TODO: make configurable
+	    logManager.attach(new LogToUI(logTxtArea));	// TODO: should we load the log file here?
+	    logManager.notifyObservers(createLogMessage("Program started running"));
 	    
 	    // Set up the address column - this is already correct
 	    AddressClmCheckTable.setCellValueFactory(cellData -> 
