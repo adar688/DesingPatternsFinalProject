@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="837.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.mainPageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="837.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.mainPageController">
    <children>
       <Label layoutX="31.0" layoutY="53.0" text="Address To Check:">
          <font>
@@ -19,7 +19,7 @@
       </Label>
       <Label layoutX="31.0" layoutY="86.0" text="Add new address" />
       <TextField fx:id="newAddressTxtBox" layoutX="31.0" layoutY="113.0" />
-      <Button fx:id="AddToListBtn" layoutX="196.0" layoutY="113.0" mnemonicParsing="false" style="-fx-background-color: #3f7bbf; -fx-text-fill: white;" text="Add to list" />
+      <Button fx:id="AddToListBtn" layoutX="196.0" layoutY="113.0" mnemonicParsing="false" onAction="#addToList" style="-fx-background-color: #3f7bbf; -fx-text-fill: white;" text="Add to list" />
       <TableView fx:id="AddressToCheckTable" layoutX="31.0" layoutY="151.0" prefHeight="200.0" prefWidth="358.0">
         <columns>
           <TableColumn fx:id="AddressClmCheckTable" prefWidth="263.5" style="-fx-text-fill: white; -fx-background-color: #3f7bbf;" text="Address" />
