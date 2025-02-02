@@ -19,6 +19,13 @@ public class ConfigurationClass {
         return config;
     }
     
+    /**
+    * Loads configuration properties from a properties file.
+    * The file should contain configuration settings like file paths, URLs, and API keys.
+    * 
+    * If the configuration file cannot be loaded, prints an example configuration
+    * structure to help users create their own config file.
+    */
     private void loadConfig() {
         try (FileInputStream fis = new FileInputStream(CONFIG_FILE)) {
             properties.load(fis);
@@ -32,7 +39,7 @@ public class ConfigurationClass {
         }
     }
     
-	 // Getters that use the properties
+	 // Getters for all configurations
 	 public String getLogFilePath() {
 	     return properties.getProperty("logFilePath");
 	 }

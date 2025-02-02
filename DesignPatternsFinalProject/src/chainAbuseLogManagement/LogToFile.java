@@ -11,6 +11,13 @@ public class LogToFile extends LogObserver {
         this.logFilePath = filePath;
     }
     
+    /**
+    * Updates the log file by appending a new log entry.
+    * Uses FileWriter in append mode to preserve existing logs.
+    * Each log entry is written on a new line.
+    * 
+    * @param log The log message to append to the file
+    */
     @Override
     public void update(String log) {
         try (FileWriter fw = new FileWriter(logFilePath, true);
