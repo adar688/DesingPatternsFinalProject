@@ -7,23 +7,27 @@ import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+import GUI.ConfigurationClass;
+
 public class ChainAbuseRequestBuilder {
     private final HttpRequest.Builder requestBuilder;
     private final String baseUrl;
     private final Map<String, String> queryParams;
+    private final ConfigurationClass config;
     public String endpoint;
     
     public ChainAbuseRequestBuilder(String baseUrl) {
         this.requestBuilder = HttpRequest.newBuilder();
         this.baseUrl = baseUrl;
         this.queryParams = new HashMap<>();
+        this.config = ConfigurationClass.getConfig();
         
         // Set default parameters
-        requestBuilder.header("accept", "application/json");
+        requestBuilder.header("accept", "application/json");	// TODO: consider configing this
         queryParams.put("includePrivate", "false");
         queryParams.put("page", "1");
         queryParams.put("perPage", "50");
-        endpoint = "/reports";	// defaultive endpoint
+        endpoint = config.getEndpoint();
     }
     
     /***
@@ -135,24 +139,5 @@ public class ChainAbuseRequestBuilder {
         return requestBuilder.uri(URI.create(urlBuilder.toString()))
                      .GET()
                      .build();
-    }
-    
-    public static void main(String[] args) {
-        try {
-            HttpRequest request = new ChainAbuseRequestBuilder("https://api.chainabuse.com/v0")
-                .endpoint("/reports")
-                .basicAuth("Y2FfZG5aRVVYVmxOREJWUzFGRWFYRldXVWxyVVVaNGFuVTFMa1Z1T1ZsSFRWUmhNREJJZDBkeWVVMWhRbTFEVUdjOVBROmNhX2RuWkVVWFZsTkRCVlMxRkVhWEZXV1VsclVVWjRhblUxTGtWdU9WbEhUVlJoTURCSWQwZHllVTFoUW0xRFVHYzlQUQ==")
-                .address("bc1qpzf5a7ucnfkwhgkxlyaywsyj6ennaspkcaxcpq")
-                .build();
-                
-            HttpResponse<String> response = HttpClient.newHttpClient()
-                .send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println("In the new builder");
-            //System.out.println(request.toString());  
-            System.out.println(response.body());
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

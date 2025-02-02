@@ -4,16 +4,19 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import GUI.ConfigurationClass;
+
 public class Report {
 
-	// TODO: remove Link if still useless when were done
+	private final ConfigurationClass config;
 	private String link;
 	private String address;
 	private int abuseCount;
 	
 	public Report(String address,HttpResponse<String> report) {
+		config = ConfigurationClass.getConfig();
 		this.address = address;
-		link = "chainabuse.com/address/" + address; // TODO: add configuration
+		link = config.getResaultLinkBase() + address;
 		calcCount(report.body());
 	}
 	
