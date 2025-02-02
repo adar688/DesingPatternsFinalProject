@@ -1,8 +1,8 @@
 # Design Patterns Final Project - using chainabuse API
 
 ## How to run:
-Run the mainPageController class to run the project  
-use the config.properties to change the configurations, specifically the encrypted API key and the output path for the logs file.
+Run the mainPageController class to run the project.  
+Use the config.properties to change the configurations, specifically the encrypted API key and the output path for the logs file.
 
 ## Design Patterns used:
 <details>
