@@ -1,68 +1,55 @@
 package GUI;
+import java.io.*;
+import java.util.Properties;
 
 public class ConfigurationClass {
+    private static ConfigurationClass config;
+    private Properties properties;
+    private final String CONFIG_FILE = "config.properties";
+    
+    private ConfigurationClass() {
+        properties = new Properties();
+        loadConfig();
+    }
+    
+    public static ConfigurationClass getConfig() {
+        if(config == null) {
+            config = new ConfigurationClass();
+        }
+        return config;
+    }
+    
+    private void loadConfig() {
+        try (FileInputStream fis = new FileInputStream(CONFIG_FILE)) {
+            properties.load(fis);
+        } catch (IOException e) {
+        	System.out.println("Failed to load configuration, make sure you have a config.properties file with the structure of the following example:");
+        	System.out.println("logFilePath=custom_logs.txt\r\n" + 
+        			"websiteURL=https://api.chainabuse.com/v0\r\n" + 
+        			"endpoint=/reports\r\n" + 
+        			"apiKey=your_api_key\r\n" + 
+        			"resaultLinkBase=chainabuse.com/address/");
+        }
+    }
+    
+	 // Getters that use the properties
+	 public String getLogFilePath() {
+	     return properties.getProperty("logFilePath");
+	 }
 	
-	private static ConfigurationClass config;
-	private String logFilePath;
-	private String websiteURL;
-	private String endpoint;
-	private String apiKey;
+	 public String getWebsiteURL() {
+	     return properties.getProperty("websiteURL");
+	 }
 	
-	private String resaultLinkBase;
+	 public String getEndpoint() {
+	     return properties.getProperty("endpoint");
+	 }
 	
-	private ConfigurationClass() {
-		// default configuration
-		logFilePath = "logs.txt";
-		websiteURL = "https://api.chainabuse.com/v0";
-		endpoint = "/reports";
-		apiKey = "Y2FfTmpSdmVUazRlR3hRUkZKdGRWZzNXVGRQWjFWV1dHeHVMa2xFVHpablJVSkllRGQ0TVRkUkwxcHlSVEpuTlVFOVBROmNhX05qUnZlVGs0ZUd4UVJGSnRkVmczV1RkUFoxVldXR3h1TGtsRVR6Wm5SVUpJZURkNE1UZFJMMXB5UlRKbk5VRTlQUQ==";
-		resaultLinkBase = "chainabuse.com/address/";
-	}
+	 public String getApiKey() {
+	     return properties.getProperty("apiKey");
+	 }
 	
-	public String getResaultLinkBase() {
-		return resaultLinkBase;
-	}
-
-	public void setResaultLinkBase(String resaultLinkBase) {
-		this.resaultLinkBase = resaultLinkBase;
-	}
-
-	public String getApiKey() {
-		return apiKey;
-	}
-
-	public void setApiKey(String apiKey) {
-		this.apiKey = apiKey;
-	}
-
-	public String getEndpoint() {
-		return endpoint;
-	}
-
-	public void setEndpoint(String endpoint) {
-		this.endpoint = endpoint;
-	}
-
-	public static ConfigurationClass getConfig() {
-		if(config == null) {
-			config = new ConfigurationClass();
-		}
-		return config;
-	}
-
-	public String getLogFilePath() {
-		return logFilePath;
-	}
-
-	public String getWebsiteURL() {
-		return websiteURL;
-	}
-
-	public void setWebsiteURL(String websiteURL) {
-		this.websiteURL = websiteURL;
-	}
-
-	public void setLogFilePath(String logFilePath) {
-		this.logFilePath = logFilePath;
-	}
+	 public String getResaultLinkBase() {
+	     return properties.getProperty("resaultLinkBase");
+	 }
 }
