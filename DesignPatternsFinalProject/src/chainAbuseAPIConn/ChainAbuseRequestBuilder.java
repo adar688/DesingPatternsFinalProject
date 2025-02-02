@@ -22,8 +22,8 @@ public class ChainAbuseRequestBuilder {
         this.queryParams = new HashMap<>();
         this.config = ConfigurationClass.getConfig();
         
-        // Set default parameters
-        requestBuilder.header("accept", "application/json");	// TODO: consider configing this
+        // Set default parameters (according to API documentation)
+        requestBuilder.header("accept", "application/json");
         queryParams.put("includePrivate", "false");
         queryParams.put("page", "1");
         queryParams.put("perPage", "50");
@@ -79,8 +79,6 @@ public class ChainAbuseRequestBuilder {
         queryParams.put(key, value);
         return this;
     }
-    
-    // Optional methods to override defaults
     
     /***
      * Customize inclusion of private reports

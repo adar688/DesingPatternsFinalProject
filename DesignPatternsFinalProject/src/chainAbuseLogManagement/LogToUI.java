@@ -9,9 +9,15 @@ public class LogToUI extends LogObserver {
         this.logArea = logArea;
     }
     
+    /**
+    * Updates the UI TextArea with a new log entry.
+    * Uses Platform.runLater to ensure thread-safe UI updates.
+    * Each log entry is appended on a new line.
+    * 
+    * @param log The log message to be displayed in the TextArea
+    */
     @Override
     public void update(String log) {
-        // Use Platform.runLater since we're updating UI from potentially different thread
         Platform.runLater(() -> {
             logArea.appendText(log + "\n");
         });
